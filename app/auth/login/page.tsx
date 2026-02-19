@@ -1,8 +1,16 @@
 "use client";
 
+import { useAuth } from "@/app/context/AuthProvider";
 import { supabase } from "@/app/lib/supabaseClient";
+import { redirect } from "next/navigation";
 
 export default function LoginPage() {
+  const { user } = useAuth();
+
+  if (user) {
+    redirect("/dashboard");
+  }
+
   const loginHandler = async () => {
     await supabase.auth.signInWithOAuth({
       provider: "google",

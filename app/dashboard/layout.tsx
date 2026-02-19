@@ -16,12 +16,16 @@ export default function ProtectedLayout({
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading && !user) {
+    if (loading) return;
+
+    if (!user) {
       router.replace("/auth/login");
     }
-  }, [user, loading, router]);
+  }, [loading, user, router]); 
 
-  if (loading || !user) return <Loader />;
+  if (loading) return <Loader />;
+
+  if (!user) return null;
 
   return (
     <div className="min-h-screen flex flex-col">
